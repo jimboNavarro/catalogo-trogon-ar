@@ -85,10 +85,10 @@
         <aside class="info">
           <div class="eyebrow" style="color:#987346">Registro tridimensional</div>
           <h3 id="titulo-pieza">Figurilla 01</h3>
-          <p>Modelo digital de prueba de una figurilla procedente del Grupo Trogon, sitio arqueológico El Mirador, Petén.</p>
-          <div class="spec"><b>Procedencia</b>Grupo TIGRE · TROGON · El Mirador, Petén</div>
-          <div class="spec"><b>OPERACION</b><span id="nombre-archivo">ELM.OP.121QQ.47.164</span></div>
-          <div class="spec"><b>Información de registro</b>ARQUEOLOGO · Richard Hansen.</div>
+          <p id="descripcion-pieza">Modelo digital de prueba de una figurilla procedente del Grupo Trogon, sitio arqueológico El Mirador, Petén.</p>
+          <div class="spec"><b>Procedencia</b><span id="procedencia-pieza">Grupo TIGRE · TROGON · El Mirador, Petén</span></div>
+          <div class="spec"><b>OPERACIÓN</b><span id="operacion-pieza">ELM.OP.121QQ.47.164</span></div>
+          <div class="spec"><b>Información de registro</b><span id="registro-pieza">ARQUEÓLOGO · Richard Hansen.</span></div>
           <p class="status" id="estado" role="status">Cargar modelo...</p>
           <button class="primary ar" type="button" id="ar-externo">VER EN REALIDAD AUMENTADA</button>
         </aside>
@@ -108,23 +108,65 @@
     const catalogo=document.getElementById('catalogo');
     const viewer=document.getElementById('modelo');
     const estado=document.getElementById('estado');
-    const piezas=[
-      {nombre:'Figurilla 01',archivo:'trogon_01.glb'},
-      {nombre:'Figurilla 02',archivo:'trogon_02.glb'},
-      {nombre:'Figurilla 03',archivo:'trogon_03.glb'}
+    // ============================================================
+    // EDITAR AQUÍ LAS FICHAS DE CADA FIGURILLA.
+    // Cada objeto corresponde a una pieza y sus datos son independientes.
+    // No cambies los nombres de las propiedades (nombre, archivo, etc.).
+    // Reemplaza los textos entre comillas por la información verificada.
+    // ============================================================
+    const piezas = [
+      {
+        nombre: 'Figurilla 01',
+        archivo: 'trogon_01.glb',
+        descripcion: 'Modelo digital de prueba de una figurilla procedente del Grupo Trogon, sitio arqueológico El Mirador, Petén.',
+        procedencia: 'Grupo TIGRE · TROGON · El Mirador, Petén',
+        operacion: 'ELM.OP.121QQ.47.164',
+        registro: 'ARQUEÓLOGO · Richard Hansen.'
+      },
+      {
+        nombre: 'Figurilla 02',
+        archivo: 'trogon_02.glb',
+        descripcion: 'Información pendiente de completar.',
+        procedencia: 'Información pendiente de completar.',
+        operacion: 'Información pendiente de completar.',
+        registro: 'Información pendiente de completar.'
+      },
+      {
+        nombre: 'Figurilla 03',
+        archivo: 'trogon_03.glb',
+        descripcion: 'Información pendiente de completar.',
+        procedencia: 'Información pendiente de completar.',
+        operacion: 'Información pendiente de completar.',
+        registro: 'Información pendiente de completar.'
+      }
     ];
+
+    // Actualiza la ficha y el GLB al seleccionar cualquiera de las piezas.
+    function mostrarPieza(indice, desplazar = true) {
+      const p = piezas[indice];
+      if (!p) return;
+      document.querySelectorAll('.tile').forEach((boton, i) => {
+        boton.setAttribute('aria-pressed', String(i === indice));
+        const titulo = boton.querySelector('.meta strong');
+        if (titulo) titulo.textContent = p.nombre;
+      });
+      document.getElementById('titulo-pieza').textContent = p.nombre;
+      document.getElementById('descripcion-pieza').textContent = p.descripcion;
+      document.getElementById('procedencia-pieza').textContent = p.procedencia;
+      document.getElementById('operacion-pieza').textContent = p.operacion;
+      document.getElementById('registro-pieza').textContent = p.registro;
+      const nuevoModelo = 'Catalogo_Trogon_AR/modelos/' + p.archivo;
+      if (viewer.getAttribute('src') !== nuevoModelo) {
+        viewer.setAttribute('src', nuevoModelo);
+        estado.textContent = 'Cargando modelo...';
+      }
+      viewer.setAttribute('alt', 'Modelo tridimensional de ' + p.nombre + ' del Grupo Trogon');
+      if (desplazar) document.getElementById('detalle').scrollIntoView({behavior:'smooth',block:'start'});
+    }
     document.getElementById('entrar').addEventListener('click',()=>{intro.classList.add('hidden');catalogo.classList.remove('hidden');window.scrollTo(0,0)});
     document.getElementById('volver').addEventListener('click',()=>{catalogo.classList.add('hidden');intro.classList.remove('hidden');window.scrollTo(0,0)});
-    document.querySelectorAll('.tile').forEach(btn=>btn.addEventListener('click',()=>{
-      const i=Number(btn.dataset.index),p=piezas[i];
-      document.querySelectorAll('.tile').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
-      document.getElementById('titulo-pieza').textContent=p.nombre;
-      document.getElementById('nombre-archivo').textContent=p.archivo;
-      viewer.setAttribute('src','Catalogo_Trogon_AR/modelos/'+p.archivo);
-      viewer.setAttribute('alt','Modelo tridimensional de '+p.nombre+' del Grupo Trogon');
-      estado.textContent='Cargando modelo...';
-      document.getElementById('detalle').scrollIntoView({behavior:'smooth',block:'start'});
-    }));
+    document.querySelectorAll('.tile').forEach(btn => btn.addEventListener('click', () => mostrarPieza(Number(btn.dataset.index))));
+    mostrarPieza(0, false);
     viewer.addEventListener('load',()=>{estado.textContent='Modelo cargado. Puedes rotarlo y acercarlo.'});
     viewer.addEventListener('error',()=>{estado.textContent='No se pudo abrir el modelo. Verifica el nombre del archivo GLB y su ubicación en la carpeta modelos.'});
     document.getElementById('ar-externo').addEventListener('click',()=>{
@@ -133,4 +175,3 @@
   </script>
 </body>
 </html>
-
