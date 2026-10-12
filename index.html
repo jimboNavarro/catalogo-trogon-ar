@@ -31,6 +31,12 @@
     .catalog-logos .logo-institucion{width:clamp(55px,7vw,80px);height:45px}
     .catalog-logos .logo-placeholder{font-size:.58rem}
     @media(max-width:720px){.grid{grid-template-columns:1fr;gap:12px}.tile{display:flex}.thumb{height:110px;width:36%;flex-shrink:0}.tile .meta{align-self:center}.viewer-section{grid-template-columns:1fr}.viewer-wrap,.viewer-wrap model-viewer{height:410px;min-height:410px}.main{padding-top:34px}.site-header{padding:16px}}
+    /* V6: fotografías de figurillas con encuadre uniforme, sin recortes. */
+    .thumb{height:auto;aspect-ratio:4/3;overflow:hidden;padding:12px;background:#ebe4d8}
+    .thumb img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center}
+    @media(max-width:720px){
+      .thumb{width:116px;height:116px;aspect-ratio:1/1;flex:0 0 116px;padding:9px}
+    }
   </style>
 </head>
 <body>
