@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#211d19">
+  <title>Rostros del Pasado | Grupo Trogon</title>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <style>
+    :root {--ink:#29251f;--cream:#f7f4ec;--sand:#e9e1d2;--gold:#a67d48;--dark:#211d19}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #ae8350;outline-offset:3px}
+    .hidden{display:none!important}.intro{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:56px 22px;background:radial-gradient(circle at 50% 38%,#483a2a 0%,#211d19 66%);color:#f8f3e8}
+    .eyebrow{letter-spacing:.25em;text-transform:uppercase;font-size:.72rem;color:#d5bb93;font-weight:700}.intro h1{font-family:Georgia,serif;font-size:clamp(3.1rem,8vw,6.8rem);font-weight:400;line-height:1.05;margin:20px 0}.intro .rule{width:76px;height:1px;background:#b99864;margin:24px auto}.intro p{max-width:610px;line-height:1.75;color:#e1d8c9}.primary{border:1px solid #b99562;background:#b99562;color:#211d19;border-radius:2px;padding:15px 28px;margin-top:25px;font-weight:700;letter-spacing:.04em}.primary:hover{background:#dec59e}.intro .bottom{margin-top:46px;color:#b8ab99;font-size:.78rem;letter-spacing:.07em}
+    .site-header{display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid #dcd2c2;padding:20px clamp(18px,5vw,65px);background:#faf8f2}.brand{font-family:Georgia,serif;font-size:1.25rem}.back{border:1px solid #c9bcaa;background:transparent;color:#514537;padding:10px 15px}.main{max-width:1150px;padding:48px 20px 90px;margin:auto}.main h2{font-family:Georgia,serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:400;margin:9px 0}.lead{color:#6f665b;line-height:1.65;max-width:710px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:30px}.tile{background:#fffcf6;border:1px solid #ddd4c6;padding:0;text-align:left;color:inherit;overflow:hidden}.tile:hover,.tile[aria-pressed="true"]{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}.thumb{height:155px;background:linear-gradient(145deg,#e9e0cf,#cec0ab);display:flex;align-items:center;justify-content:center}.thumb span{font-family:Georgia,serif;color:#8e7450;font-size:3rem}.tile .meta{padding:18px}.tile strong{display:block;font-family:Georgia,serif;font-size:1.25rem;font-weight:400}.tile small{display:block;color:#887965;margin-top:8px}
+    .viewer-section{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(240px,1fr);gap:28px;margin-top:42px;align-items:stretch}.viewer-wrap{position:relative;min-height:470px;background:#e7e0d4;border:1px solid #d6cabc}.viewer-wrap model-viewer{width:100%;height:470px;--poster-color:#e7e0d4}.loading-note{position:absolute;bottom:14px;left:14px;font-size:.74rem;color:#6f655a;pointer-events:none;background:#f7f4ecdf;padding:8px 10px}.info{background:#fffdf8;border:1px solid #ddd4c6;padding:28px;display:flex;flex-direction:column}.info h3{font:400 2rem Georgia,serif;margin:12px 0}.info p{color:#6f655a;line-height:1.7}.spec{margin-top:18px;padding-top:18px;border-top:1px solid #e5dccf;font-size:.9rem}.spec b{display:block;margin-bottom:8px}.ar{width:100%;margin-top:auto}.status{font-size:.82rem!important;color:#8a5f42!important;min-height:36px}.footer{border-top:1px solid #ddd2c1;padding:22px;text-align:center;color:#786d5e;font-size:.8rem}
+    /* Logotipos institucionales en portada y catálogo. Sustituir imagenes/logo_01.png, etc. */
+    .logos-institucionales{display:flex;align-items:center;justify-content:center;gap:clamp(12px,3vw,28px);flex-wrap:wrap;width:100%;max-width:520px;margin:27px auto 0;padding:13px 16px;border-top:1px solid rgba(185,149,98,.3)}
+    .logo-institucion{width:clamp(65px,11vw,105px);height:58px;display:flex;align-items:center;justify-content:center;position:relative}
+    .logo-institucion img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+    .logo-institucion img:not([src]),.logo-institucion img.no-disponible{display:none}
+    .logo-institucion .logo-placeholder{display:none;border:1px dashed currentColor;opacity:.65;border-radius:4px;width:100%;height:100%;align-items:center;justify-content:center;text-align:center;font-size:.67rem;line-height:1.25;padding:5px}
+    .logo-institucion img.no-disponible + .logo-placeholder{display:flex}
+    .intro .logos-institucionales{color:#dbc7a7}
+    .catalog-logos{margin:0;max-width:320px;gap:10px;padding:0;border:0;color:#75654f}
+    .catalog-logos .logo-institucion{width:clamp(55px,7vw,80px);height:45px}
+    .catalog-logos .logo-placeholder{font-size:.58rem}
+    @media(max-width:720px){.grid{grid-template-columns:1fr;gap:12px}.tile{display:flex}.thumb{height:110px;width:36%;flex-shrink:0}.tile .meta{align-self:center}.viewer-section{grid-template-columns:1fr}.viewer-wrap,.viewer-wrap model-viewer{height:410px;min-height:410px}.main{padding-top:34px}.site-header{padding:16px}}
+  </style>
+</head>
+<body>
+  <section id="inicio" class="intro">
+    <div class="eyebrow">Proyecto Cuenca Mirador</div>
+    <h1>Rostros<br>del Pasado</h1>
+    <div class="rule"></div>
+    <div class="eyebrow">Colección digital · Grupo Trogon</div>
+    <p>Una aproximación digital al patrimonio arqueológico de El Mirador, Petén, Guatemala. Explora tres modelos tridimensionales de figurillas mayas y descubre nuevas formas de observar sus detalles.</p>
+    <button class="primary" id="entrar" type="button">EXPLORAR COLECCIÓN →</button>
+    <div class="bottom">EL MIRADOR · PETÉN · GUATEMALA</div>
+    <!-- Cambia los tres archivos PNG por los logotipos oficiales, preferiblemente con fondo transparente. -->
+    <div class="logos-institucionales" aria-label="Instituciones participantes">
+      <div class="logo-institucion"><img src="imagenes/logo_01.png" alt="Logotipo institucional 1" onerror="this.classList.add('no-disponible')"><span class="logo-placeholder">LOGO 1</span></div>
+      <div class="logo-institucion"><img src="imagenes/logo_02.png" alt="Logotipo institucional 2" onerror="this.classList.add('no-disponible')"><span class="logo-placeholder">LOGO 2</span></div>
+      <div class="logo-institucion"><img src="imagenes/logo_03.png" alt="Logotipo institucional 3" onerror="this.classList.add('no-disponible')"><span class="logo-placeholder">LOGO 3</span></div>
+    </div>
+  </section>
+
+  <section id="catalogo" class="hidden" aria-label="Catálogo digital">
+    <header class="site-header"><div class="brand">Rostros del Pasado</div><button type="button" class="back" id="volver">← Inicio</button></header>
+    <main class="main">
+      <div class="eyebrow" style="color:#987346">Grupo Trogon · Colección piloto</div>
+      <h2>Catálogo digital</h2>
+      <p class="lead">Selecciona una de las tres piezas para examinar su modelo tridimensional. Puedes girarlo, acercarlo y, desde un dispositivo compatible, visualizarlo en realidad aumentada.</p>
+      <div class="grid" aria-label="Seleccionar figurilla">
+        <button class="tile" data-index="0" aria-pressed="true"><div class="thumb"><span>01</span></div><div class="meta"><strong>Figurilla 01</strong><small>Ver modelo tridimensional →</small></div></button>
+        <button class="tile" data-index="1" aria-pressed="false"><div class="thumb"><span>02</span></div><div class="meta"><strong>Figurilla 02</strong><small>Ver modelo tridimensional →</small></div></button>
+        <button class="tile" data-index="2" aria-pressed="false"><div class="thumb"><span>03</span></div><div class="meta"><strong>Figurilla 03</strong><small>Ver modelo tridimensional →</small></div></button>
+      </div>
+      <div class="viewer-section" id="detalle">
+        <div class="viewer-wrap">
+          <model-viewer id="modelo" src="modelos/trogon_01.glb" alt="Modelo tridimensional de la figurilla maya 01 del Grupo Trogon" camera-controls touch-action="pan-y" auto-rotate rotation-per-second="12deg" shadow-intensity="0.7" exposure="1" ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" loading="eager">
+            <button class="primary ar" slot="ar-button" type="button" style="position:absolute;bottom:54px;left:50%;transform:translateX(-50%);width:max-content;max-width:90%;margin:0">VER EN REALIDAD AUMENTADA</button>
+          </model-viewer>
+          <div class="loading-note">Arrastra para rotar · Desliza para acercar</div>
+        </div>
+        <aside class="info">
+          <div class="eyebrow" style="color:#987346">Registro tridimensional</div>
+          <h3 id="titulo-pieza">Figurilla 01</h3>
+          <p>Modelo digital de prueba de una figurilla procedente del Grupo Trogon, sitio arqueológico El Mirador, Petén.</p>
+          <div class="spec"><b>Procedencia</b>Grupo Trogon · El Mirador, Petén</div>
+          <div class="spec"><b>Modelo</b><span id="nombre-archivo">trogon_01.glb</span></div>
+          <div class="spec"><b>Información de registro</b>Ficha técnica y créditos específicos pendientes de incorporar.</div>
+          <p class="status" id="estado" role="status">Cargando modelo...</p>
+          <button class="primary ar" type="button" id="ar-externo">VER EN REALIDAD AUMENTADA</button>
+        </aside>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="logos-institucionales catalog-logos" aria-label="Instituciones participantes">
+        <div class="logo-institucion"><img src="imagenes/logo_01.png" alt="Logotipo institucional 1" onerror="this.classList.add('no-disponible')"><span class="logo-placeholder">LOGO 1</span></div>
+        <div class="logo-institucion"><img src="imagenes/logo_02.png" alt="Logotipo institucional 2" onerror="this.classList.add('no-disponible')"><span class="logo-placeholder">LOGO 2</span></div>
+        <div class="logo-institucion"><img src="imagenes/logo_03.png" alt="Logotipo institucional 3" onerror="this.classList.add('no-disponible')"><span class="logo-placeholder">LOGO 3</span></div>
+      </div>
+      <p>Catálogo piloto · Grupo Trogon · Proyecto Cuenca Mirador</p>
+    </footer>
+  </section>
+  <script>
+    const intro=document.getElementById('inicio');
+    const catalogo=document.getElementById('catalogo');
+    const viewer=document.getElementById('modelo');
+    const estado=document.getElementById('estado');
+    const piezas=[
+      {nombre:'Figurilla 01',archivo:'trogon_01.glb'},
+      {nombre:'Figurilla 02',archivo:'trogon_02.glb'},
+      {nombre:'Figurilla 03',archivo:'trogon_03.glb'}
+    ];
+    document.getElementById('entrar').addEventListener('click',()=>{intro.classList.add('hidden');catalogo.classList.remove('hidden');window.scrollTo(0,0)});
+    document.getElementById('volver').addEventListener('click',()=>{catalogo.classList.add('hidden');intro.classList.remove('hidden');window.scrollTo(0,0)});
+    document.querySelectorAll('.tile').forEach(btn=>btn.addEventListener('click',()=>{
+      const i=Number(btn.dataset.index),p=piezas[i];
+      document.querySelectorAll('.tile').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+      document.getElementById('titulo-pieza').textContent=p.nombre;
+      document.getElementById('nombre-archivo').textContent=p.archivo;
+      viewer.setAttribute('src','modelos/'+p.archivo);
+      viewer.setAttribute('alt','Modelo tridimensional de '+p.nombre+' del Grupo Trogon');
+      estado.textContent='Cargando modelo...';
+      document.getElementById('detalle').scrollIntoView({behavior:'smooth',block:'start'});
+    }));
+    viewer.addEventListener('load',()=>{estado.textContent='Modelo cargado. Puedes rotarlo y acercarlo.'});
+    viewer.addEventListener('error',()=>{estado.textContent='No se pudo abrir el modelo. Verifica el nombre del archivo GLB y su ubicación en la carpeta modelos.'});
+    document.getElementById('ar-externo').addEventListener('click',()=>{
+      if(viewer.canActivateAR){viewer.activateAR()}else{estado.textContent='La realidad aumentada requiere un dispositivo y navegador compatibles. Puedes seguir explorando el modelo en 3D.'}
+    });
+  </script>
+</body>
+</html>
